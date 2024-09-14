@@ -1,14 +1,14 @@
-import { RouterProvider } from "react-router-dom";
-import { appRoutes } from "./Components/Navigations/Routes";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./Components/Navigations/Routes";
 import store from "./Store/AppStore";
 
 export default function App() {
   return (
-    <div>
       <Provider store={store}>
-      <RouterProvider router={appRoutes}/>
+        <BrowserRouter>
+      <AppRoutes/>
+      </BrowserRouter>
       </Provider>
-    </div>
   );
 }

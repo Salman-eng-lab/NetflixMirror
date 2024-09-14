@@ -1,27 +1,12 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "firebase/auth";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
-import { deleteUserData, setUserData } from "../../Store/Slices/userSlice";
 const Header = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const userData = useSelector((state) => state.userData);
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { accessToken, displayName, email, emailVerified } = user;
-        dispatch(
-          setUserData({ accessToken, displayName, email, emailVerified })
-        );
-        navigate("/Home");
-      } else {
-        dispatch(deleteUserData());
-        navigate("/");
-      }
-    });
-  }, []);
+    const userData = useSelector((state) => state.userData);
+    const navigate = useNavigate();
+  
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -63,38 +48,44 @@ const Header = () => {
             </option>
           </select>
         </div> */}
-        {
-          !userData  ?<button
-          onClick={() => {
-            handleSignOut();
-          }}
-          className="bg-[#E50815] py-1 px-4 rounded-lg text-white"
-        >
-          Sign in
-        </button>:<div className="relative inline-block group">
-          <button className="p-0 border-none bg-transparent">
-            <img
-              src="https://occ-0-3752-3647.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTZ2zlLdBVC05fsd2YQAR43J6vB1NAUBOOrxt7oaFATxMhtdzlNZ846H3D8TZzooe2-FT853YVYs8p001KVFYopWi4D4NXM.png?r=229"
-              alt="user"
-              className="w-10 h-10 object-cover"
-            />
+        {!userData ? (
+          <button
+            onClick={() => {
+              handleSignOut();
+            }}
+            className="bg-[#E50815] py-1 px-4 rounded-lg text-white"
+          >
+            Sign in
           </button>
-          <div className="absolute hidden group-hover:block bg-[rgba(0,0,0,0.7)] min-w-[160px] shadow-lg z-10 right-0 top-full rounded-sm">
-            <Link
-              href="#home"
-              className="block text-white text-sm py-4 px-2 hover:underline"
-            >
-              User
-            </Link>
-            <div className="bg-slate-500 w-full h-[1px]"/>
-           <button onClick={()=>handleSignOut()} className="block text-white text-sm py-4 px-2 hover:underline">
-            Sign out of netflix
-           </button>
+        ) : (
+          <div className="flex items-center">
+            <button onClick={()=>{navigate('/Search')}} className="bg-[#E50815] py-2 rounded-md px-4 mx-4 text-white">Search Movies</button>
+            <div className="relative inline-block group">
+            <button className="p-0 border-none bg-transparent">
+              <img
+                src="https://occ-0-3752-3647.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTZ2zlLdBVC05fsd2YQAR43J6vB1NAUBOOrxt7oaFATxMhtdzlNZ846H3D8TZzooe2-FT853YVYs8p001KVFYopWi4D4NXM.png?r=229"
+                alt="user"
+                className="w-10 h-10 object-cover"
+              />
+            </button>
+            <div className="absolute hidden group-hover:block bg-[rgba(0,0,0,0.7)] min-w-[160px] shadow-lg z-10 right-0 top-full rounded-sm">
+              <Link
+                href="#home"
+                className="block text-white text-sm py-4 px-2 hover:underline"
+              >
+                User
+              </Link>
+              <div className="bg-slate-500 w-full h-[1px]" />
+              <button
+                onClick={() => handleSignOut()}
+                className="block text-white text-sm py-4 px-2 hover:underline"
+              >
+                Sign out of netflix
+              </button>
+            </div>
           </div>
-        </div>
-        
-        }
-        
+          </div>
+        )}
       </div>
     </div>
   );

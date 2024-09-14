@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { API_OPTIONS } from "../utils/constants";
 import { addNowPlayingMoviesTrailer } from "../Store/Slices/moviesSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const useMovieTrailer = (movieId) => {
     const dispatch= useDispatch();
+    const movies=useSelector((state) => state.moviesList);
+    console.log(movies,'movies')
     const options = {
         method: 'GET',
         headers: {

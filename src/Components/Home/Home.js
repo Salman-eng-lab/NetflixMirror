@@ -27,7 +27,7 @@ const Home = () => {
       <div className="aspect-video">
         <Header />
         <VideoPlayingBackground movieId={id} />
-        {/* <VideoInfoCard title={original_title} overview={overview} /> */}
+        <VideoInfoCard title={original_title} overview={overview} />
       </div>
       <div>
         <MoviesListContainer />
