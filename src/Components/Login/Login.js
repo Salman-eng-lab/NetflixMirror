@@ -1,13 +1,11 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth } from "../../firebase/firebase";
 import { checkValidations } from "../../utils/utils";
 import Header from "../Header/Header";
 const Login = () => {
-  const userData = useSelector((state) => state.userData);
   const [isSignIn, setisSignIn] = useState(true);
   const email = useRef(null);
   const password = useRef(null);
